@@ -22,5 +22,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote add upstream https://github.com/leon-mbs/zstore.git
           git fetch upstream
-          git merge upstream/dev --no-edit
+          git merge upstream/dev -X theirs --no-edit
           git push origin master
