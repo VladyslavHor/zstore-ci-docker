@@ -27,13 +27,14 @@ jobs:
           git fetch upstream
           
           git reset --hard upstream/dev
+
+          git fetch origin infra-files
           
           git checkout origin/infra-files -- Dockerfile
           git checkout origin/infra-files -- docker-compose.yml
           git checkout origin/infra-files -- .dockerignore
           git checkout origin/infra-files -- .github/workflows/docker-build-push.yml
-          
-          git checkout HEAD -- .github/workflows/sync-upstream.yml
+          git checkout origin/infra-files -- .github/workflows/sync-upstream.yml
           
           git add .
           git commit -m "chore: safe sync with upstream and inject docker configuration"
