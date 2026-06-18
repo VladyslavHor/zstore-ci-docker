@@ -1,0 +1,41 @@
+name: Sync fork with upstream
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # кожен понеділок о 6:00 UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4.2.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Force sync and copy docker files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git remote add upstream https://github.com/leon-mbs/zstore.git
+          git fetch upstream
+          
+          git reset --hard upstream/dev
+          
+          git checkout origin/infra-files -- Dockerfile
+          git checkout origin/infra-files -- docker-compose.yml
+          git checkout origin/infra-files -- .dockerignore
+          git checkout origin/infra-files -- .github/workflows/docker-build-push.yml
+          
+          git checkout HEAD -- .github/workflows/sync-upstream.yml
+          
+          git add .
+          git commit -m "chore: safe sync with upstream and inject docker configuration"
+          git push origin master --forceame: Sync fork with upstream
+
