@@ -37,5 +37,5 @@ jobs:
           
           git add .
           git commit -m "chore: safe sync with upstream and inject docker configuration"
-          git push origin master --forceame: Sync fork with upstream
+          git push origin master --force
 
