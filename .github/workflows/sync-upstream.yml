@@ -8,6 +8,9 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout fork
@@ -22,5 +25,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote add upstream https://github.com/leon-mbs/zstore.git
           git fetch upstream
-          git merge upstream/dev -X theirs --no-edit
-          git push origin master
+          git rebase upstream/dev
+          git push origin master --force
