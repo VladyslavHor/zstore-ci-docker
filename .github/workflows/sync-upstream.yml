@@ -29,7 +29,8 @@ jobs:
           git reset --hard upstream/dev
 
           git fetch origin infra-files
-          
+
+          git checkout origin/infra-files -- docker/
           git checkout origin/infra-files -- Dockerfile
           git checkout origin/infra-files -- docker-compose.yml
           git checkout origin/infra-files -- .dockerignore
